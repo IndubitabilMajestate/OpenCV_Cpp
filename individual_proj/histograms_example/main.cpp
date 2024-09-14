@@ -46,6 +46,7 @@ int main()
         titles.push_back(title);
         //imshow(titles[i],images[i]);
     }
+    
     waitKey();
     MatND histogram;
     int histSize = 256;
@@ -89,7 +90,6 @@ int main()
     cout << "ChiSquare: " << histMatchingChiSquare << endl;
     cout << "Intersect: " << histMatchingIntersect << endl;
     cout << "Bhattacharyya: " << histMatchingBhattacharyya << endl;
-    // cout << "Absolute Image Path: " << abs_image_path.string() << endl;
 
     imshow(titles[2], images[2]);
     imshow("Histogram 1", histImage);
@@ -97,5 +97,57 @@ int main()
     imshow("Histogram 2", histImage2);
 
     waitKey(0);
+    destroyAllWindows();
+
+    Mat histEqualized;
+    equalizeHist(images[2], histEqualized);
+
+    imshow("Source Image",  images[2]);
+    imshow("Equalized Histogram Demo",  histEqualized);
+
+    waitKey(0);
+    destroyAllWindows();
+    
+
+    vector<Mat> bgr_planes;
+    split(images[1], bgr_planes);
+
+    histSize = 256;
+    float range[] = {0, 256};
+    const float* histRange = { range };
+    bool uniform = true, accumulate = false;
+
+    Mat  b_hist, g_hist, r_hist;
+
+    calcHist(&bgr_planes[0], 1, 0, Mat(), b_hist, 1, &histSize, &histRange, uniform, accumulate);
+    calcHist(&bgr_planes[1], 1, 0, Mat(), g_hist, 1, &histSize, &histRange, uniform, accumulate);
+    calcHist(&bgr_planes[2], 1, 0, Mat(), r_hist, 1, &histSize, &histRange, uniform, accumulate);
+
+    hist_w = 512, hist_h = 400, bin_w = cvRound((double)hist_w / histSize);
+
+    histImage = Mat(hist_h, hist_w, CV_8UC3, Scalar(0, 0, 0));
+
+    normalize(b_hist, b_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat());
+    normalize(g_hist, g_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat());
+    normalize(r_hist, r_hist, 0, histImage.rows, NORM_MINMAX, -1, Mat());
+
+    for(int i = 1; i < histSize; i++){
+        line(histImage, Point(bin_w* (i-1), hist_h - cvRound(b_hist.at<float>(i-1))),
+        Point(bin_w * (i), hist_h - cvRound(b_hist.at<float>(i))),
+        Scalar(255, 0, 0), 2, 8, 0);
+        line(histImage, Point(bin_w* (i-1), hist_h - cvRound(g_hist.at<float>(i-1))),
+        Point(bin_w * (i), hist_h - cvRound(g_hist.at<float>(i))),
+        Scalar(0, 255, 0), 2, 8, 0);
+        line(histImage, Point(bin_w* (i-1), hist_h - cvRound(r_hist.at<float>(i-1))),
+        Point(bin_w * (i), hist_h - cvRound(r_hist.at<float>(i))),
+        Scalar(0, 0, 255), 2, 8, 0);
+    }
+
+    imshow("Source Image", images[2]);
+    imshow("Histogram image", histImage);
+
+    waitKey();
+
+    
     return 0;
 }
