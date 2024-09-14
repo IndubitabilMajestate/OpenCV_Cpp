@@ -1,0 +1,12 @@
+#.vscode
+build
+individual_proj/*/output
+individual_proj/images/CroppedImages/*
+
+# used images so far
+!individual_proj/images/CroppedImages/Canon5D2_5_160_3200_chair_5_mean.JPG
+!individual_proj/images/CroppedImages/Canon5D2_5_160_3200_chair_5_real.JPG
+!individual_proj/images/CroppedImages/Canon5D2_5_160_3200_chair_11_mean.JPG
+!individual_proj/images/CroppedImages/Canon5D2_5_160_3200_chair_11_real.JPG
+!individual_proj/images/CroppedImages/Canon5D2_5_160_3200_chair_14_mean.JPG
+!individual_proj/images/CroppedImages/Canon5D2_5_160_3200_chair_14_real.JPG
