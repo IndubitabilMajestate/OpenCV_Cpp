@@ -1,9 +1,9 @@
-.vscode
+.vscode/*
 build
 individual_proj/*/output
 individual_proj/images/CroppedImages/*
 
-!.vscode/tasks.json
+#!.vscode/tasks.json
 
 # used images so far
 !individual_proj/images/CroppedImages/Canon5D2_5_160_3200_chair_5_mean.JPG
@@ -17,3 +17,4 @@ individual_proj/images/CroppedImages/*
 !individual_proj/images/CroppedImages/Canon5D2_5_200_3200_toy_12_mean.JPG
 !individual_proj/images/CroppedImages/NikonD800_5_125_6400_stair_7_mean.JPG
 !individual_proj/images/CroppedImages/Canon80D_8_8_12800_printer_14_mean.JPG
+!individual_proj/images/CroppedImages/Image*.png
